@@ -12,6 +12,6 @@
     - name: Upload static webpage
       ansible.builtin.copy:
         content: |
-          The basic html page.
+          The advanced html page.
         dest: /var/www/html/index.html
         mode: "0644"
