@@ -25,3 +25,12 @@ source env.sh
 pip install -r requirements.txt
 ansible-galaxy install -r requirements.yml
 ```
+
+Run:
+
+```
+source .venv/bin/activate
+source env.sh
+
+ansible-playbook -i inventory playbooks/01_create_vm.yml
+```
