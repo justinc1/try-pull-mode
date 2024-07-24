@@ -33,5 +33,6 @@ source .venv/bin/activate
 source env.sh
 
 ansible-playbook -i inventory playbooks/01_create_vm.yml
-ansible-playbook -i inventory playbooks/02_setup_webserver.yml
+ansible-playbook -i inventory playbooks/02_setup_webserver.yml -l demo_webservers
+ansible-playbook -i inventory playbooks/03_setup_ansible_pull.yml
 ```

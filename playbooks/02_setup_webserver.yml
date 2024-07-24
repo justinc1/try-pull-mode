@@ -1,6 +1,6 @@
 ---
 - name: Setup webserver
-  hosts: demo_webservers
+  hosts: demo_webservers,local
   gather_facts: True
   tasks:
     - name: Install nginx

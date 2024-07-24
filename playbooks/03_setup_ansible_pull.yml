@@ -1,0 +1,34 @@
+---
+- name: Setup ansible-pull
+  hosts: demo_webservers
+  gather_facts: True
+  tasks:
+    - name: Install pip
+      ansible.builtin.package:
+        name:
+          - python3-pip
+        state: present
+
+    - name: Install a recent ansible-core
+      ansible.builtin.pip:
+        name:
+          - ansible-core
+        state: present
+
+    # I would want this in /root/.ansible/pull/demo_xlab-webserver-0/workdir/
+    # Adjust ansible.cfg instead.
+    - name: Get requirements.yml
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/justinc1/try-pull-mode/main/requirements.yml
+        dest: /tmp/requirements.yml
+        mode: '0644'
+    - name: Install needed Ansible collections
+      ansible.builtin.command:
+        cmd: ansible-galaxy collection install -r /tmp/requirements.yml
+
+    - name: Setup ansible-pull cronjob
+      ansible.builtin.cron:
+        name: "ansible_pull 02_setup_webserver.yml"
+        minute: "*/5"
+        hour: "*"
+        job: "/usr/local/bin/ansible-pull --url https://github.com/justinc1/try-pull-mode playbooks/02_setup_webserver.yml -i hosts"
