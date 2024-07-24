@@ -1,0 +1,17 @@
+---
+- name: Setup webserver
+  hosts: demo_webservers
+  gather_facts: True
+  tasks:
+    - name: Install nginx
+      ansible.builtin.package:
+        name:
+          - nginx
+        state: present
+
+    - name: Upload static webpage
+      ansible.builtin.copy:
+        content: |
+          The basic html page.
+        dest: /var/www/html/index.html
+        mode: "0644"
